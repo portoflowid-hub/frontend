@@ -74,9 +74,9 @@ const LoginPage = () => {
           </form>
 
           <div className={styles.separator}>ATAU</div>
-          <button type="button" className={styles.googleButton}>
+{/*<button type="button" className={styles.googleButton}>
             <FcGoogle size={22} /> Lanjutkan dengan Google
-          </button>
+          </button>*/}
           <p className={styles.redirectText}>
             Belum punya akun? <Link href="/register">Daftar sekarang</Link>
           </p>
