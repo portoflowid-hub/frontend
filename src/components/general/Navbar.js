@@ -42,7 +42,6 @@ const Navbar = () => {
         <div className={styles.navLinks}>
           <Link href="/career">Career</Link>
           <Link href="/academic">Academic</Link>
-          // <Link href="/community">Community</Link>
         </div>
         <div className={styles.navActions}>
           {user ? (
