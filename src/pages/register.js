@@ -66,6 +66,7 @@ const RegisterPage = () => {
                 onChange={(e) => setFullName(e.target.value)} 
                 className={styles.input} 
                 required 
+                placeholder="Masukkan nama lengkap"
               />
             </div>
 
@@ -78,6 +79,7 @@ const RegisterPage = () => {
                 onChange={(e) => setUsername(e.target.value)} 
                 className={styles.input} 
                 required 
+                placeholder="Masukkan username"
               />
             </div>
 
@@ -90,6 +92,7 @@ const RegisterPage = () => {
                 onChange={(e) => setEmail(e.target.value)} 
                 className={styles.input} 
                 required 
+                placeholder="Masukkan Email Asli"
               />
             </div>
 
@@ -102,6 +105,7 @@ const RegisterPage = () => {
                 onChange={(e) => setDateOfBirth(e.target.value)} 
                 className={styles.input} 
                 required 
+                placeholder="Pilih tanggal lahir"
               />
             </div>
 
@@ -129,6 +133,7 @@ const RegisterPage = () => {
                 onChange={(e) => setPassword(e.target.value)} 
                 className={styles.input} 
                 required 
+                placeholder="Masukkan password"
               />
             </div>
 
@@ -136,10 +141,10 @@ const RegisterPage = () => {
             <button type="submit" className={styles.submitButton}>Daftar</button>
           </form>
 
-          <div className={styles.separator}>ATAU</div>
+          {/* <div className={styles.separator}>ATAU</div>
           <button type="button" className={styles.googleButton}>
             <FcGoogle size={22} /> Daftar dengan Google
-          </button>
+          </button> */}
           <p className={styles.redirectText}>
             Sudah punya akun? <Link href="/login">Masuk sekarang</Link>
           </p>

@@ -16,7 +16,7 @@ const Hero = () => {
       </button>
       <div className={styles.videoPlaceholder}>
         {/* video atau gambar */}
-        <img src="/images/iseng.jpg" alt="anime girl" />
+        <img src="/images/logoIseng.png" alt="anime girl" />
       </div>
     </div>
   );
