@@ -92,7 +92,7 @@ const RegisterPage = () => {
                 onChange={(e) => setEmail(e.target.value)} 
                 className={styles.input} 
                 required 
-                placeholder="Masukkan Email Asli"
+                placeholder="contoh@gmail.com"
               />
             </div>
 
