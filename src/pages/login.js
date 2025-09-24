@@ -9,18 +9,18 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false); // Tambahkan state loading
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
-    setLoading(true); // Mulai loading
+    setLoading(true);
 
     try {
       const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
-   
-      const response = await fetch(`${API_BASE}/api/login`, {
+      
+      const response = await fetch(`${API_BASE}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -36,7 +36,7 @@ const LoginPage = () => {
     } catch (err) {
       setError('Gagal terhubung ke server. Pastikan server backend berjalan.');
     } finally {
-      setLoading(false); // Hentikan loading
+      setLoading(false);
     }
   };
 
