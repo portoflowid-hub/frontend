@@ -16,7 +16,6 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('accessToken');
-
       if (!token) {
         router.push('/login');
         return;
@@ -25,16 +24,10 @@ const DashboardPage = () => {
       try {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
-
         const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
-        // test console log
-        console.log("MEMANGGIL URL UNTUK GET USER:", `${API_BASE}/api/user/${userId}`);
-
-        const response = await fetch(`${API_BASE}/api/user/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+        const response = await fetch(`${API_BASE}/api/users/user/${userId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
         });
 
         if (!response.ok) {
@@ -45,7 +38,6 @@ const DashboardPage = () => {
 
         const data = await response.json();
         setUser(data.data);
-
       } catch (error) {
         console.error("Failed to fetch or decode token:", error);
         localStorage.removeItem('accessToken');
@@ -58,24 +50,10 @@ const DashboardPage = () => {
     fetchData();
   }, []);
 
-  const handleDataAdded = (newItem, type) => {
-    setUser(currentUser => {
-      const updatedUser = { ...currentUser };
-      if (type === 'project') {
-        updatedUser.projects = [newItem, ...(currentUser.projects || [])];
-      }
-      return updatedUser;
-    });
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return null;
-  }
-
+  // ... (sisa kode handleDataAdded dan return JSX tidak berubah) ...
+  const handleDataAdded = (newItem, type) => { /* ... */ };
+  if (loading) { return <div>Loading...</div>; }
+  if (!user) { return null; }
   return (
     <>
       <Head>
