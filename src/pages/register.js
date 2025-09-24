@@ -1,170 +1,125 @@
-// src/pages/register.js
-import { useState } from 'react';
-import Head from 'next/head';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import styles from '../styles/login/AuthForm.module.css';
-import { FcGoogle } from 'react-icons/fc';
+"use client";
 
-const RegisterPage = () => {
-  const [fullName, setFullName] = useState('');
-  const [username, setUsername] = useState('');
-  const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function Register() {
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setError('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // ✅ Validasi confirm password
     if (password !== confirmPassword) {
-      setError('Password dan Konfirmasi Password tidak sama!');
+      setError("Password dan Konfirmasi Password tidak sama!");
       return;
     }
 
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
-      const response = await fetch(`${API_BASE}/api/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullName,
-          username,
-          email,
-          password,
-          gender,
-        }),
-      });
+      const res = await fetch(
+        "https://newbackend-production-8979.up.railway.app/api/v1/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName,
+            username,
+            email,
+            gender,
+            password,
+            confirmPassword, 
+          }),
+        }
+      );
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (response.ok) {
-        alert('Registrasi berhasil! Anda akan diarahkan ke halaman login.');
-        router.push('/login');
-      } else {
-        setError(data.message || 'Registrasi gagal. Silakan coba lagi.');
+      if (!res.ok) {
+        setError(data.message || "Registrasi gagal");
+        return;
       }
+
+      // Kalau sukses
+      alert("Registrasi berhasil! Silakan cek email untuk verifikasi OTP.");
+      router.push("/login"); // redirect ke login
     } catch (err) {
-      setError('Gagal terhubung ke server. Pastikan server backend berjalan.');
+      setError("Terjadi error koneksi ke server.");
     }
   };
 
   return (
-    <>
-      <Head>
-        <title>Daftar - PortoFlow</title>
-      </Head>
-      <div className={styles.pageWrapper}>
-        <div className={styles.formContainer}>
-          <h1 className={styles.title}>Buat Akun Baru</h1>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black via-purple-900 to-black">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-black/40 p-8 rounded-xl shadow-md w-96 text-white space-y-4"
+      >
+        <h2 className="text-2xl font-bold text-center mb-4">Daftar</h2>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
-              <label htmlFor="fullName" className={styles.label}>Nama Lengkap</label>
-              <input 
-                type="text" 
-                id="fullName" 
-                value={fullName} 
-                onChange={(e) => setFullName(e.target.value)} 
-                className={styles.input} 
-                required 
-                placeholder="Masukkan nama lengkap"
-              />
-            </div>
+        {error && <p className="text-red-500 text-center">{error}</p>}
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="username" className={styles.label}>Username</label>
-              <input 
-                type="text" 
-                id="username" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)} 
-                className={styles.input} 
-                required 
-                placeholder="Masukkan username"
-              />
-            </div>
+        <input
+          type="text"
+          placeholder="Nama Lengkap"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          className="w-full p-2 rounded bg-black/30 border border-gray-600"
+        />
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="email" className={styles.label}>Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
-                className={styles.input} 
-                required 
-                placeholder="contoh@gmail.com"
-              />
-            </div>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full p-2 rounded bg-black/30 border border-gray-600"
+        />
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="gender" className={styles.label}>Jenis Kelamin</label>
-              <select 
-                id="gender" 
-                value={gender} 
-                onChange={(e) => setGender(e.target.value)} 
-                className={styles.input} 
-                required
-              >
-                <option value="" disabled>Pilih Jenis Kelamin</option>
-                <option value="male">Laki-laki</option>
-                <option value="female">Perempuan</option>
-              </select>
-            </div>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 rounded bg-black/30 border border-gray-600"
+        />
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="password" className={styles.label}>Password</label>
-              <input 
-                type="password" 
-                id="password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                className={styles.input} 
-                required 
-                placeholder="Masukkan password"
-              />
-            </div>
+        <select
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+          className="w-full p-2 rounded bg-black/30 border border-gray-600"
+        >
+          <option value="">Pilih Jenis Kelamin</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="confirmPassword" className={styles.label}>Konfirmasi Password</label>
-              <input 
-                type="password" 
-                id="confirmPassword" 
-                value={confirmPassword} 
-                onChange={(e) => setConfirmPassword(e.target.value)} 
-                className={styles.input} 
-                required 
-                placeholder="Masukkan ulang password"
-              />
-            </div>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 rounded bg-black/30 border border-gray-600"
+        />
 
-            {error && <p style={{ color: 'red', fontSize: '0.9rem' }}>{error}</p>}
-            <button type="submit" className={styles.submitButton}>Daftar</button>
-          </form>
+        <input
+          type="password"
+          placeholder="Konfirmasi Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className="w-full p-2 rounded bg-black/30 border border-gray-600"
+        />
 
-          <div className={styles.separator}>ATAU</div>
-          <button
-            type="button"
-            className={styles.googleButton}
-            onClick={() => {
-              const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
-              window.location.href = `${API_BASE}/auth/google`;
-            }}
-          >
-            <FcGoogle size={22} /> Daftar dengan Google
-          </button>
-          <p className={styles.redirectText}>
-            Sudah punya akun? <Link href="/login">Masuk sekarang</Link>
-          </p>
-        </div>
-      </div>
-    </>
+        <button
+          type="submit"
+          className="w-full bg-purple-600 hover:bg-purple-700 p-2 rounded font-semibold"
+        >
+          Daftar
+        </button>
+      </form>
+    </div>
   );
-};
-
-export default RegisterPage;
+}
