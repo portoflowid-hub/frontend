@@ -1,3 +1,4 @@
+// src/pages/register.js
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -8,10 +9,10 @@ import { FcGoogle } from 'react-icons/fc';
 const RegisterPage = () => {
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
   const [gender, setGender] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
@@ -19,8 +20,14 @@ const RegisterPage = () => {
     event.preventDefault();
     setError('');
 
+    // ✅ Validasi confirm password
+    if (password !== confirmPassword) {
+      setError('Password dan Konfirmasi Password tidak sama!');
+      return;
+    }
+
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_BASE; // 🔑 pakai env var
+      const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
       const response = await fetch(`${API_BASE}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,7 +36,6 @@ const RegisterPage = () => {
           username,
           email,
           password,
-          dateOfBirth,
           gender,
         }),
       });
@@ -97,19 +103,6 @@ const RegisterPage = () => {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="dateOfBirth" className={styles.label}>Tanggal Lahir</label>
-              <input 
-                type="date" 
-                id="dateOfBirth" 
-                value={dateOfBirth} 
-                onChange={(e) => setDateOfBirth(e.target.value)} 
-                className={styles.input} 
-                required 
-                placeholder="Pilih tanggal lahir"
-              />
-            </div>
-
-            <div className={styles.inputGroup}>
               <label htmlFor="gender" className={styles.label}>Jenis Kelamin</label>
               <select 
                 id="gender" 
@@ -137,14 +130,34 @@ const RegisterPage = () => {
               />
             </div>
 
+            <div className={styles.inputGroup}>
+              <label htmlFor="confirmPassword" className={styles.label}>Konfirmasi Password</label>
+              <input 
+                type="password" 
+                id="confirmPassword" 
+                value={confirmPassword} 
+                onChange={(e) => setConfirmPassword(e.target.value)} 
+                className={styles.input} 
+                required 
+                placeholder="Masukkan ulang password"
+              />
+            </div>
+
             {error && <p style={{ color: 'red', fontSize: '0.9rem' }}>{error}</p>}
             <button type="submit" className={styles.submitButton}>Daftar</button>
           </form>
 
-          {/* <div className={styles.separator}>ATAU</div>
-          <button type="button" className={styles.googleButton}>
+          <div className={styles.separator}>ATAU</div>
+          <button
+            type="button"
+            className={styles.googleButton}
+            onClick={() => {
+              const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+              window.location.href = `${API_BASE}/auth/google`;
+            }}
+          >
             <FcGoogle size={22} /> Daftar dengan Google
-          </button> */}
+          </button>
           <p className={styles.redirectText}>
             Sudah punya akun? <Link href="/login">Masuk sekarang</Link>
           </p>
