@@ -9,31 +9,34 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth(); // Ambil fungsi login dari context
+  const [loading, setLoading] = useState(false); // Tambahkan state loading
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
+    setLoading(true); // Mulai loading
 
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_BASE; // 🔑 ambil dari env var
-      const response = await fetch(`${API_BASE}/api/users/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-
+      const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+   
+      const response = await fetch(`${API_BASE}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Panggil fungsi login dari context dengan token
         login(data.accessToken);
       } else {
         setError(data.message || 'Login gagal. Periksa kembali email dan password Anda.');
       }
     } catch (err) {
       setError('Gagal terhubung ke server. Pastikan server backend berjalan.');
+    } finally {
+      setLoading(false); // Hentikan loading
     }
   };
 
@@ -70,7 +73,9 @@ const LoginPage = () => {
               />
             </div>
             {error && <p style={{color: 'red', fontSize: '0.9rem'}}>{error}</p>}
-            <button type="submit" className={styles.submitButton}>Masuk</button>
+            <button type="submit" className={styles.submitButton} disabled={loading}>
+              {loading ? 'Memproses...' : 'Masuk'}
+            </button>
           </form>
 
           <div className={styles.separator}>ATAU</div>
