@@ -28,7 +28,9 @@ const DashboardPage = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
 
-        const response = await fetch(`http://localhost:5000/api/user/${userId}`, {
+        const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+
+        const response = await fetch(`${API_BASE}/api/users/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

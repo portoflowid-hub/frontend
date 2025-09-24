@@ -74,12 +74,19 @@ const LoginPage = () => {
           </form>
 
           <div className={styles.separator}>ATAU</div>
-{/*<button type="button" className={styles.googleButton}>
-            <FcGoogle size={22} /> Lanjutkan dengan Google
-          </button>*/}
-          <p className={styles.redirectText}>
-            Belum punya akun? <Link href="/register">Daftar sekarang</Link>
-          </p>
+            <button
+              type="button"
+              className={styles.googleButton}
+              onClick={() => {
+                const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+                window.location.href = `${API_BASE}/auth/google`;
+              }}
+            >
+              <FcGoogle size={22} /> Lanjutkan dengan Google
+            </button>
+            <p className={styles.redirectText}>
+              Belum punya akun? <Link href="/register">Daftar sekarang</Link>
+            </p>
         </div>
       </div>
     </>
