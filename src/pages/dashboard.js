@@ -28,6 +28,9 @@ const DashboardPage = () => {
 
         const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
+        // test console log
+        console.log("MEMANGGIL URL UNTUK GET USER:", `${API_BASE}/api/user/${userId}`);
+
         const response = await fetch(`${API_BASE}/api/user/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
