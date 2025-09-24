@@ -79,7 +79,7 @@ const LoginPage = () => {
           </form>
 
           <div className={styles.separator}>ATAU</div>
-            <button
+            {/* <button
               type="button"
               className={styles.googleButton}
               onClick={() => {
@@ -88,7 +88,7 @@ const LoginPage = () => {
               }}
             >
               <FcGoogle size={22} /> Lanjutkan dengan Google
-            </button>
+            </button> */}
             <p className={styles.redirectText}>
               Belum punya akun? <Link href="/register">Daftar sekarang</Link>
             </p>

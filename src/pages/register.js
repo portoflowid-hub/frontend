@@ -38,7 +38,7 @@ const RegisterPage = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE}/api/register`, {
+      const response = await fetch(`${API_BASE}/api/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -161,20 +161,20 @@ const RegisterPage = () => {
           </form>
 
           <div className={styles.separator}>ATAU</div>
-          <button
-            type="button"
-            className={styles.googleButton}
-            onClick={() => {
-              const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
-              window.location.href = `${API_BASE}/auth/google`;
-            }}
-          >
-            <FcGoogle size={22} /> Daftar dengan Google
-          </button>
+            {/* <button
+              type="button"
+              className={styles.googleButton}
+              onClick={() => {
+                const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+                window.location.href = `${API_BASE}/auth/google`;
+              }}
+            >
+              <FcGoogle size={22} /> Daftar dengan Google
+            </button> */}
 
-          <p className={styles.redirectText}>
-            Sudah punya akun? <Link href="/login">Masuk sekarang</Link>
-          </p>
+            <p className={styles.redirectText}>
+              Sudah punya akun? <Link href="/login">Masuk sekarang</Link>
+            </p>
         </div>
       </div>
     </>
