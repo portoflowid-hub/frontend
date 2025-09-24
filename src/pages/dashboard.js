@@ -1,5 +1,3 @@
-// src/pages/dashboard.js (MODIFIKASI PENUH)
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { jwtDecode } from 'jwt-decode';
@@ -30,7 +28,7 @@ const DashboardPage = () => {
 
         const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
-        const response = await fetch(`${API_BASE}/api/users/${userId}`, {
+        const response = await fetch(`${API_BASE}/api/user/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -55,20 +53,14 @@ const DashboardPage = () => {
     };
 
     fetchData();
-  }, []); // Dependency [router] dihapus karena tidak esensial untuk re-fetching
+  }, []);
 
-  // FUNGSI BARU: Untuk menangani penambahan data dari komponen anak
   const handleDataAdded = (newItem, type) => {
     setUser(currentUser => {
       const updatedUser = { ...currentUser };
-      
       if (type === 'project') {
-        // Menambahkan item baru ke depan array agar muncul di paling atas
         updatedUser.projects = [newItem, ...(currentUser.projects || [])];
       }
-      // Nanti bisa ditambahkan untuk 'certificate' dan 'experience'
-      // else if (type === 'certificate') { ... }
-      
       return updatedUser;
     });
   };
@@ -78,7 +70,7 @@ const DashboardPage = () => {
   }
 
   if (!user) {
-    return null; // Atau komponen skeleton/loading yang lebih baik
+    return null;
   }
 
   return (
@@ -90,7 +82,6 @@ const DashboardPage = () => {
         <Navbar />
         <main className={styles.container}>
           <ProfileHeader user={user} />
-          {/* PERUBAHAN: Teruskan prop `onDataAdded` dan `experiences` */}
           <DashboardContent 
             projects={user.projects || []} 
             certificates={user.certificates || []}
