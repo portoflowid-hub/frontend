@@ -2,10 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [
-      'images.pexels.com',
-      'i.ibb.co',
-      'images.unsplash.com',
+    remotePatterns: [
+      // Konfigurasi lama Anda dalam format baru
+      { hostname: 'images.pexels.com' },
+      { hostname: 'i.ibb.co' },
+      { hostname: 'images.unsplash.com' },
+      
+      // Konfigurasi baru untuk storage Anda
+      {
+        protocol: 'https',
+        hostname: 'is3.cloudhost.id',
+        pathname: '/portoflow-storage-1/**',
+      },
     ],
   },
 };

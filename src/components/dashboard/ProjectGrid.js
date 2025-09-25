@@ -1,4 +1,4 @@
-// src/components/dashboard/ProjectGrid.js (MODIFIKASI PENUH)
+// src/components/dashboard/ProjectGrid.js (DIPERBAIKI)
 
 import { useState } from 'react';
 import Image from 'next/image';
@@ -8,11 +8,10 @@ import {
   BsBookmark, BsLink45Deg, BsBuilding, BsPlusCircleFill 
 } from 'react-icons/bs';
 
-// PERUBAHAN: Impor komponen Modal dan Form yang asli
 import Modal from './Modal'; 
-import AddProjectForm from './AddProjectForm'; // Pastikan path ini benar
+import AddProjectForm from './AddProjectForm';
 
-// --- Komponen-komponen Card (Tidak ada perubahan) ---
+// --- KODE ASLI ANDA UNTUK CARD DIKEMBALIKAN ---
 const ProjectCard = ({ project }) => (
   <div className={styles.card}>
     <div className={styles.cardImageWrapper}>
@@ -95,18 +94,15 @@ const ExperienceCard = ({ experience }) => (
 // --- Akhir Komponen Card ---
 
 
-// PERUBAHAN: Hapus placeholder form, karena kita sudah punya file aslinya
+// Placeholder untuk form yang belum dibuat
 const AddCertificateForm = ({ onClose }) => <div>Form Tambah Sertifikat akan dibuat.</div>;
 const AddExperienceForm = ({ onClose }) => <div>Form Tambah Pengalaman akan dibuat.</div>;
 
 
-const AddItemButton = ({ text, onClick }) => (
+// Komponen baru untuk menampilkan pesan saat daftar kosong
+const EmptyState = ({ text }) => (
   <div className={styles.emptyStateContainer}>
     <p className={styles.emptyStateText}>{`Belum ada ${text.toLowerCase()} yang ditambahkan.`}</p>
-    <button className={styles.addButton} onClick={onClick}>
-      <BsPlusCircleFill />
-      <span>Tambah {text}</span>
-    </button>
   </div>
 );
 
@@ -127,27 +123,27 @@ const DashboardContent = ({ projects, certificates, experiences, onDataAdded }) 
   };
   
   const handleSuccess = (newItem, type) => {
-    // Teruskan data baru ke parent (dashboard.js)
     if (onDataAdded) {
       onDataAdded(newItem, type);
     }
     closeModal();
-  }
+  };
 
+  // Logika render konten diubah untuk menggunakan EmptyState
   const renderContent = () => {
     switch (activeTab) {
       case 'project':
         return projects && projects.length > 0 
           ? projects.map(project => <ProjectCard key={project._id || project.id} project={project} />)
-          : <AddItemButton text="Proyek" onClick={() => openModal('project')} />;
+          : <EmptyState text="Proyek" />;
       case 'certificate':
         return certificates && certificates.length > 0 
           ? certificates.map(cert => <CertificateCard key={cert._id || cert.id} certificate={cert} />)
-          : <AddItemButton text="Sertifikat" onClick={() => openModal('certificate')} />;
+          : <EmptyState text="Sertifikat" />;
       case 'experience':
         return experiences && experiences.length > 0 
           ? experiences.map(exp => <ExperienceCard key={exp._id || exp.id} experience={exp} />)
-          : <AddItemButton text="Pengalaman" onClick={() => openModal('experience')} />;
+          : <EmptyState text="Pengalaman" />;
       default:
         return null;
     }
@@ -156,7 +152,6 @@ const DashboardContent = ({ projects, certificates, experiences, onDataAdded }) 
   const renderModalContent = () => {
     switch (modalType) {
       case 'project':
-        // PERUBAHAN: Gunakan komponen form yang asli
         return <AddProjectForm onClose={closeModal} onSuccess={(newItem) => handleSuccess(newItem, 'project')} />;
       case 'certificate':
         return <AddCertificateForm onClose={closeModal} onSuccess={(newItem) => handleSuccess(newItem, 'certificate')} />;
@@ -172,16 +167,23 @@ const DashboardContent = ({ projects, certificates, experiences, onDataAdded }) 
     if (modalType === 'certificate') return 'Tambah Sertifikat Baru';
     if (modalType === 'experience') return 'Tambah Pengalaman Baru';
     return '';
-  }
+  };
 
   return (
     <>
       <div className={styles.mainContent}>
-        <div className={styles.contentTabs}>
+        <div className={styles.contentHeader}>
+          <div className={styles.contentTabs}>
             <button className={`${styles.tabButton} ${activeTab === 'project' ? styles.active : ''}`} onClick={() => setActiveTab('project')}>Project</button>
             <button className={`${styles.tabButton} ${activeTab === 'certificate' ? styles.active : ''}`} onClick={() => setActiveTab('certificate')}>Sertifikat</button>
             <button className={`${styles.tabButton} ${activeTab === 'experience' ? styles.active : ''}`} onClick={() => setActiveTab('experience')}>Pengalaman</button>
+          </div>
+          <button className={styles.addButton} onClick={() => openModal(activeTab)}>
+            <BsPlusCircleFill />
+            <span>Tambah</span>
+          </button>
         </div>
+
         <div className={styles.projectGrid}>
           {renderContent()}
         </div>

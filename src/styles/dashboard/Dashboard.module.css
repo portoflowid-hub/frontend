@@ -270,9 +270,26 @@
   font-size: 1rem;
   font-weight: 600; 
   transition: background-color 0.3s ease, transform 0.2s ease;
+
+  /* baru */
+  margin-bottom: -1px;
 }
 
 .addButton:hover {
   background-color: #9d4edd;
   transform: translateY(-2px); /* Efek mengangkat sedikit */
+}
+
+/* baru */
+.contentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--card-stroke);
+  margin-bottom: 30px;
+}
+
+.contentTabs {
+  border-bottom: none; /* Border sudah di-handle oleh parent */
+  margin-bottom: 0;
 }

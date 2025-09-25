@@ -35,7 +35,8 @@ const AcademicPage = () => {
           headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`http://localhost:5000/api/courses?${params.toString()}`, { headers });
+        const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+        const response = await fetch(`${API_BASE}/api/courses?${params.toString()}`, { headers });
         
         if (!response.ok) {
           throw new Error('Network response was not ok');

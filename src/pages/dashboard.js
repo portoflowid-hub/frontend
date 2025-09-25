@@ -1,3 +1,5 @@
+// src/pages/dashboard.js (MODIFIKASI PENUH DENGAN LOG)
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { jwtDecode } from 'jwt-decode';
@@ -50,10 +52,32 @@ const DashboardPage = () => {
     fetchData();
   }, []);
 
-  // ... (sisa kode handleDataAdded dan return JSX tidak berubah) ...
-  const handleDataAdded = (newItem, type) => { /* ... */ };
+  // ======================================================================
+  // PERUBAHAN DI SINI: Fungsi handleDataAdded diisi dengan console.log
+  // ======================================================================
+  const handleDataAdded = (newItem, type) => {
+    // LOG 1: Untuk memastikan fungsi ini dipanggil dengan data yang benar
+    console.log("Fungsi handleDataAdded dipanggil dengan newItem:", newItem);
+
+    setUser(currentUser => {
+      // LOG 2: Untuk melihat state proyek SEBELUM diupdate
+      console.log("State proyek SEBELUM diupdate:", currentUser.projects);
+
+      const updatedUser = { ...currentUser };
+      if (type === 'project') {
+        updatedUser.projects = [newItem, ...(currentUser.projects || [])];
+      }
+
+      // LOG 3: Untuk melihat state proyek SETELAH diupdate
+      console.log("State proyek SETELAH diupdate:", updatedUser.projects);
+
+      return updatedUser;
+    });
+  };
+
   if (loading) { return <div>Loading...</div>; }
   if (!user) { return null; }
+  
   return (
     <>
       <Head>

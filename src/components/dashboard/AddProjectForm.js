@@ -63,6 +63,8 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
         throw new Error(data.message || 'Gagal menambahkan proyek.');
       }
 
+      console.log("RESPONS SUKSES DARI SERVER:", data);
+
       if (onSuccess) {
         onSuccess(data.data);
       }
