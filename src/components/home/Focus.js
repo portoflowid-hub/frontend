@@ -8,17 +8,17 @@ import { BsArrowRight } from 'react-icons/bs';
 const focusAreas = [
   {
     title: 'Career Roadmap',
-    imageUrl: 'https://i.ibb.co/6rC2w4x/undraw-directions-re-kj52.png',
+    imageUrl: '/images/5.png',
     link: '/career' 
   },
   {
     title: 'Academy',
-    imageUrl: 'https://i.ibb.co/3m8s7mG/undraw-online-learning-re-qw08.png',
+    imageUrl: '/images/6.png',
     link: '/academy' 
   },
   {
     title: 'Portofolio',
-    imageUrl: 'https://i.ibb.co/Z6f0Z9w/undraw-portfolio-update-re-jqnp.png',
+    imageUrl: '/images/7.png',
     link: '/portfolio'
   }
 ];
