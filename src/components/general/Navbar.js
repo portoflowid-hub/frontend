@@ -30,7 +30,7 @@ const Navbar = () => {
     };
   }, [isDropdownOpen]);
 
-  const profilePic = user?.profilePic || '/images/iseng.jpg';
+  const profilePic = user?.profilePic || '/images/profil.jpg';
 
   return (
     <nav className={styles.navbar}>
