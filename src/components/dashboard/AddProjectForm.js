@@ -48,16 +48,19 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
         throw new Error('Token tidak ditemukan. Silakan login ulang.');
       }
 
-      const response = await fetch(
-        'https://newbackend-production-8979.up.railway.app/api/projects',
-        {
+      const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('image', image); // ubah dari 'projectImage' jadi 'image'
+        
+        const response = await fetch('https://newbackend-production-8979.up.railway.app/api/createProject', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
           },
           body: formData,
-        }
-      );
+        });
+
 
       let data;
       try {
