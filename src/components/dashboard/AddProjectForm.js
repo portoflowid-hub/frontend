@@ -6,7 +6,7 @@ import styles from '../../styles/dashboard/AddForm.module.css';
 
 const AddProjectForm = ({ onClose, onSuccess }) => {
   // State untuk setiap field dalam form
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
@@ -15,20 +15,19 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Fungsi untuk handle perubahan pada input gambar
+  // Handle perubahan pada input gambar
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setImage(file);
-      // Buat URL sementara untuk preview gambar
-      setImagePreview(URL.createObjectURL(file));
+      setImagePreview(URL.createObjectURL(file)); // preview sementara
     }
   };
 
-  // Fungsi yang dijalankan saat form disubmit
+  // Handle submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !description || !image) {
+    if (!title || !description || !image) {
       setError('Semua field (termasuk gambar) wajib diisi.');
       return;
     }
@@ -36,31 +35,25 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
     setIsSubmitting(true);
     setError('');
 
-    // Karena kita mengunggah file, kita harus menggunakan FormData
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('projectImage', image); // 'projectImage' harus cocok dengan nama field di backend (multer)
-
     try {
       const token = localStorage.getItem('accessToken');
       if (!token) {
         throw new Error('Token tidak ditemukan. Silakan login ulang.');
       }
 
+      // Kirim data pakai FormData
       const formData = new FormData();
-        formData.append('name', name);
-        formData.append('description', description);
-        formData.append('image', image); // ubah dari 'projectImage' jadi 'image'
-        
-        const response = await fetch('https://newbackend-production-8979.up.railway.app/api/createProject', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-          body: formData,
-        });
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('projectImage', image); // HARUS sama dengan backend (multer.single('projectImage'))
 
+      const response = await fetch('https://newbackend-production-8979.up.railway.app/api/projects', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
       let data;
       try {
@@ -73,13 +66,13 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
         throw new Error(data.message || 'Gagal menambahkan proyek.');
       }
 
-      // Jika berhasil, panggil fungsi onSuccess dari parent (ProjectGrid.js)
+      // Jika berhasil, panggil callback parent
       if (onSuccess) {
-        onSuccess(data.data); // Asumsi backend mengembalikan data proyek baru di `data.data`
+        onSuccess(data.data);
       }
 
-      // Reset form setelah sukses
-      setName('');
+      // Reset form
+      setTitle('');
       setDescription('');
       setImage(null);
       setImagePreview('');
@@ -95,13 +88,13 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.inputGroup}>
-        <label htmlFor="name" className={styles.label}>Nama Proyek</label>
+        <label htmlFor="title" className={styles.label}>Nama Proyek</label>
         <input 
-          id="name" 
+          id="title" 
           type="text" 
           className={styles.input}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
