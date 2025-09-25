@@ -19,7 +19,7 @@ const focusAreas = [
   {
     title: 'Portofolio',
     imageUrl: '/images/7.png',
-    link: '/portfolio'
+    link: '/login'
   }
 ];
 
