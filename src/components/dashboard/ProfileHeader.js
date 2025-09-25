@@ -10,7 +10,7 @@ const ProfileHeader = ({ user }) => {
   }
   
   // Gunakan foto profil default jika belum diatur
-  const profilePic = user.profilePic || '/images/iseng.jpg'; // Anda perlu siapkan gambar ini di folder /public
+  const profilePic = user.profilePic || '/images/profil.jpg'; // Anda perlu siapkan gambar ini di folder /public
 
   return (
     <div className={styles.profileHeader}>
