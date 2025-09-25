@@ -41,29 +41,46 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
     formData.append('name', name);
     formData.append('description', description);
     formData.append('projectImage', image); // 'projectImage' harus cocok dengan nama field di backend (multer)
-    // Tambahkan field lain jika ada, misal:
-    // formData.append('link', projectLink);
-    // formData.append('type', projectType);
 
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch('http://localhost:5000/api/projects', { // PASTIKAN ENDPOINT BENAR
-        method: 'POST',
-        headers: {
-          // 'Content-Type' JANGAN di-set manual, browser akan otomatis menentukannya
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData,
-      });
+      if (!token) {
+        throw new Error('Token tidak ditemukan. Silakan login ulang.');
+      }
 
-      const data = await response.json();
+      const response = await fetch(
+        'https://newbackend-production-8979.up.railway.app/api/projects',
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData,
+        }
+      );
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        data = { message: 'Server tidak merespon JSON' };
+      }
 
       if (!response.ok) {
         throw new Error(data.message || 'Gagal menambahkan proyek.');
       }
 
       // Jika berhasil, panggil fungsi onSuccess dari parent (ProjectGrid.js)
-      onSuccess(data.data); // Asumsi backend mengembalikan data proyek baru di `data.data`
+      if (onSuccess) {
+        onSuccess(data.data); // Asumsi backend mengembalikan data proyek baru di `data.data`
+      }
+
+      // Reset form setelah sukses
+      setName('');
+      setDescription('');
+      setImage(null);
+      setImagePreview('');
+      onClose && onClose();
 
     } catch (err) {
       setError(err.message);
@@ -105,7 +122,13 @@ const AddProjectForm = ({ onClose, onSuccess }) => {
           onChange={handleImageChange}
         />
         {imagePreview && (
-          <Image src={imagePreview} alt="Preview" width={400} height={200} className={styles.imagePreview} />
+          <Image 
+            src={imagePreview} 
+            alt="Preview" 
+            width={400} 
+            height={200} 
+            className={styles.imagePreview} 
+          />
         )}
       </div>
 
