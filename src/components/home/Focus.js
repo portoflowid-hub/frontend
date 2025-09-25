@@ -14,7 +14,7 @@ const focusAreas = [
   {
     title: 'Academy',
     imageUrl: '/images/6.png',
-    link: '/academy' 
+    link: '/academic' 
   },
   {
     title: 'Portofolio',
