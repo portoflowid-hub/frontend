@@ -14,33 +14,47 @@ import AddProjectForm from './AddProjectForm'; // Pastikan path ini benar
 
 // --- Komponen-komponen Card (Tidak ada perubahan) ---
 const ProjectCard = ({ project }) => (
-    <div className={styles.card}>
-        <div className={styles.cardImageWrapper}>
-            {/* Menggunakan URL dari backend, dengan fallback placeholder */}
-            <Image src={project.imageUrl || '/images/placeholder.jpg'} alt={project.name} layout="fill" objectFit="cover" />
-        </div>
-        <div className={styles.cardBody}>
-            <div className={styles.cardHeader}>
-                <h3 className={styles.cardTitle}>{project.name}</h3>
-                {project.type === 'group' ? <BsPeopleFill title="Group Project"/> : <BsPersonFill title="Solo Project"/>}
-            </div>
-            <p className={styles.cardDescription}>{project.description}</p>
-            <div className={styles.cardMeta}>
-                {/* Format tanggal jika perlu */}
-                <span>{new Date(project.createdAt).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                <a href={project.link} target="_blank" rel="noopener noreferrer">Lihat Proyek</a>
-            </div>
-        </div>
-        <div className={styles.cardFooter}>
-            <div className={styles.cardActions}>
-                <button><BsHeart/></button>
-                <button><BsChat/></button>
-                <button><BsShare/></button>
-            </div>
-            <button><BsBookmark/></button>
-        </div>
+  <div className={styles.card}>
+    <div className={styles.cardImageWrapper}>
+      <Image 
+        src={project.imageUrl || '/images/placeholder.jpg'} 
+        alt={project.title} 
+        layout="fill" 
+        objectFit="cover" 
+      />
     </div>
+    <div className={styles.cardBody}>
+      <div className={styles.cardHeader}>
+        <h3 className={styles.cardTitle}>{project.title}</h3>
+        {project.isGroup ? (
+          <BsPeopleFill title="Group Project"/>
+        ) : (
+          <BsPersonFill title="Solo Project"/>
+        )}
+      </div>
+      <p className={styles.cardDescription}>{project.description}</p>
+      <div className={styles.cardMeta}>
+        <span>
+          {new Date(project.createdAt).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </span>
+        {project.projectUrl && (
+          <a href={project.projectUrl} target="_blank" rel="noopener noreferrer">
+            Lihat Proyek
+          </a>
+        )}
+      </div>
+    </div>
+    <div className={styles.cardFooter}>
+      <div className={styles.cardActions}>
+        <button><BsHeart/></button>
+        <button><BsChat/></button>
+        <button><BsShare/></button>
+      </div>
+      <button><BsBookmark/></button>
+    </div>
+  </div>
 );
+
 const CertificateCard = ({ certificate }) => (
   <div className={styles.certificateCard}>
     <div className={styles.cardImageWrapper}>
