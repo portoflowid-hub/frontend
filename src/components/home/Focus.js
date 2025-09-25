@@ -31,7 +31,7 @@ const Focus = () => {
         {focusAreas.map((item) => (
           <div key={item.title} className={styles.card}>
             <div className={styles.imageContainer}>
-              <Image src={item.imageUrl} alt={item.title} width={180} height={150} />
+              <Image src={item.imageUrl} alt={item.title} width={180} height={180} />
             </div>
             <h3 className={styles.cardTitle}>{item.title}</h3>
             
