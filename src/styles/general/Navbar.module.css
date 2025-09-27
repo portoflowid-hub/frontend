@@ -1,5 +1,6 @@
-/* Navbar.module.css (MODIFIKASI PENUH) */
+/* Navbar.module.css */
 
+/* === Gaya Dasar Navbar (Berlaku untuk Semua Ukuran Layar) === */
 .navbar {
   width: 100%;
   padding: 20px 0;
@@ -7,10 +8,11 @@
   top: 0;
   left: 0;
   z-index: 10;
-  background: #000;
+  background: transparent; /* UBAH: Transparan untuk desktop */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* === TAMPILAN DESKTOP (DEFAULT) === */
+/* === TAMPILAN DESKTOP (Default) === */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -65,74 +67,31 @@
   color: var(--text-light);
 }
 
-/* --- Menu Overlay untuk HP (default disembunyikan) --- */
+/* --- Menu Mobile (default disembunyikan) --- */
 .mobileMenu {
-  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background-color: var(--background);
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 999; /* UBAH: z-index yang benar */
+  padding: 20px;
+  padding-top: 100px;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%);
+  display: flex; /* UBAH: Selalu flex, agar transisi lebih mulus */
+  flex-direction: column;
+  justify-content: flex-start; /* UBAH: Konten dimulai dari atas */
 }
 
-/* === MEDIA QUERY UNTUK TABLET DAN HP === */
-@media (max-width: 768px) {
-  /* Ubah tata letak container untuk layar kecil */
-  .container {
-    grid-template-columns: 1fr 1fr; /* Kolom untuk logo dan hamburger/actions */
-    justify-content: space-between; /* Rata kiri dan kanan */
-  }
-
-  /* Sembunyikan NavLinks dan NavActions di tampilan tablet */
-  .navLinks, .navActions {
-    display: none;
-  }
-
-  /* Tampilkan ikon hamburger */
-  .hamburgerIcon {
-    display: block;
-    justify-self: end;
-  }
-
-  /* Tampilkan menu mobile saat class 'open' ditambahkan oleh JS */
-  .mobileMenu.open {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 280px;
-    height: 100vh;
-    background-color: var(--background);
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 90;
-    padding-top: 100px; /* Jarak dari atas */
-  }
-
-  .mobileMenu .navLinks,
-  .mobileMenu .navActions {
-    display: flex; /* Tampilkan elemen di dalam menu mobile */
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
-    border: none;
-    border-bottom: 1px solid var(--card-stroke);
-  }
-
-  .mobileMenu .navActions {
-    justify-content: flex-start;
-    gap: 20px;
-  }
-
-  .mobileMenu .loginBtn, .mobileMenu .signupBtn {
-    font-size: 1.1rem;
-    padding: 10px 16px;
-  }
-
-  /* Atur agar Sign Up dan Login tidak sejajar untuk mobile */
-  .mobileMenu .navActions {
-    flex-direction: column;
-    align-items: stretch;
-  }
+/* Kelas yang ditambahkan oleh JavaScript untuk menampilkan menu mobile */
+.mobileMenu.open {
+  transform: translateX(0);
 }
 
-/* --- Gaya untuk elemen lainnya (tidak berubah) --- */
+/* --- Gaya untuk elemen aksi di desktop dan mobile --- */
 .loginBtn {
   font-weight: 500;
   color: var(--text-light);
@@ -154,32 +113,7 @@
   transform: scale(1.05);
 }
 
-.profileLink {
-  display: flex;
-  align-items: center;
-}
-
-.profileIcon {
-  border-radius: 50%;
-}
-
-.logoutBtn {
-  background: none;
-  border: 1px solid var(--text-secondary);
-  color: var(--text-secondary);
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.logoutBtn:hover {
-  border-color: var(--text-light);
-  color: var(--text-light);
-}
-
-/* KODE UNTUK DROPDOWN (TIDAK BERUBAH) */
+/* KODE UNTUK DROPDOWN PROFIL */
 .profileContainer {
   position: relative;
 }
@@ -197,7 +131,7 @@
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  background-color: #1a1a2e;
+  background-color: var(--card-background);
   border: 1px solid var(--card-stroke);
   border-radius: 8px;
   width: 220px;
@@ -218,7 +152,7 @@
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  color: var(--text-light);
+  color: var(--text-primary);
   text-decoration: none;
   background: none;
   border: none;
@@ -231,11 +165,88 @@
 }
 
 .dropdownItem:hover {
-  background-color: #2a2a4e;
+  background-color: var(--card-stroke);
 }
 
 .separator {
   height: 1px;
   background-color: var(--card-stroke);
   margin: 8px 0;
+}
+
+/* === MEDIA QUERY UNTUK TABLET DAN HP === */
+@media (max-width: 768px) {
+  .navbar {
+    background: var(--background);
+  }
+
+  .container {
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+  }
+
+  /* Sembunyikan NavLinks dan NavActions di tampilan desktop */
+  .navLinks, .navActions {
+    display: none;
+  }
+
+  /* Tampilkan ikon hamburger */
+  .hamburgerIcon {
+    display: block;
+    justify-self: end;
+  }
+
+  /* Atur gaya untuk konten di dalam menu mobile */
+  .mobileMenu {
+    /* UBAH: Atur gaya konten menu mobile di sini */
+  }
+
+  /* Pastikan elemen-elemen ini ditampilkan di dalam menu mobile */
+  .mobileMenu .navLinks,
+  .mobileMenu .navActions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    border: none;
+  }
+
+  .mobileMenu .navLinks {
+    border-bottom: 1px solid var(--card-stroke);
+  }
+
+  /* Gaya untuk tombol Login dan Sign Up di menu mobile */
+  .mobileMenu .navActions .loginBtn, 
+  .mobileMenu .navActions .signupBtn {
+    font-size: 1.1rem;
+    padding: 10px 16px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .mobileMenu .navActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* Gaya untuk dropdown profil di menu mobile */
+  .mobileMenu .profileContainer {
+    width: 100%;
+  }
+
+  .mobileMenu .dropdownMenu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    background: none;
+    border: none;
+    padding: 0;
+    animation: none;
+  }
+
+  .mobileMenu .dropdownItem {
+    padding-left: 0;
+  }
 }

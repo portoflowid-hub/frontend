@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
 // Menggunakan Navbar yang sudah diperbarui, yang mengelola tampilan responsif secara internal
 import Navbar from '../components/general/Navbar';
+import NavbarMobile from '../components/general/NavbarMobile';
+import useMediaQuery from '../hooks/useMediaQuery';
 import Footer from '../components/general/Footer';
 import CareerExplorer from '../components/career/CareerExplorer';
 import CareerDetailView from '../components/career/CareerDetailView';
@@ -10,6 +12,8 @@ import styles from '../styles/career/Career.module.css';
 const CareerPage = () => {
   const [selectedCareer, setSelectedCareer] = useState(null);
   const detailRef = useRef(null);
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const handleCareerSelect = (careerData) => {
     // Jika user mengklik kartu yang sama, tutup detailnya. Jika beda, ganti detailnya.
@@ -31,7 +35,7 @@ const CareerPage = () => {
         <title>Career Path - PortoFlow</title>
       </Head>
       <div className={styles.pageWrapper}>
-        <Navbar />
+        {isMobile ? <NavbarMobile /> : <Navbar />}
         <main className={styles.mainContent}>
           {/* Komponen explorer dengan semua fungsionalitasnya */}
           <CareerExplorer onCardClick={handleCareerSelect} />

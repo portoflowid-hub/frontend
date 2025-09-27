@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-// Menggunakan Navbar yang sudah diperbarui, yang mengelola tampilan responsif secara internal
-import Navbar from '../components/general/Navbar'; 
+
+// --- Impor Navbar dan Hook yang Diperlukan ---
+import Navbar from '../components/general/Navbar';
+import NavbarMobile from '../components/general/NavbarMobile';
+import useMediaQuery from '../hooks/useMediaQuery';
+// --- Akhir Impor ---
+
 import Footer from '../components/general/Footer';
 import FilterBar from '@/components/academic/FilterBar';
 import LastCourseCard from '@/components/academic/LastCourseCard';
@@ -14,6 +19,10 @@ const AcademicPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedField, setSelectedField] = useState("All");
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // --- Gunakan hook useMediaQuery di sini untuk mendeteksi lebar layar ---
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  // --- Akhir penambahan ---
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -23,15 +32,12 @@ const AcademicPage = () => {
         if (searchTerm) params.append('q', searchTerm);
         if (selectedField !== 'All') params.append('category', selectedField); 
 
-        // 1. Ambil token dari localStorage
         const token = localStorage.getItem('accessToken');
         
-        // 2. Siapkan headers untuk request
         const headers = {
           'Content-Type': 'application/json',
         };
 
-        // 3. Jika token ada, tambahkan ke header Authorization
         if (token) {
           headers['Authorization'] = `Bearer ${token}`;
         }
@@ -63,8 +69,10 @@ const AcademicPage = () => {
       <Head>
         <title>Courses Academic - PortoFlow</title>
       </Head>
-      {/* Menggunakan Navbar yang sudah diperbarui, tanpa perlu render kondisional di sini */}
-      <Navbar /> 
+      
+      {/* --- Bagian yang diubah untuk render kondisional --- */}
+      {isMobile ? <NavbarMobile /> : <Navbar />}
+      {/* --- Akhir modifikasi --- */}
 
       <main className={styles.container}>
         <h1 className={styles.headline}>Courses Academic</h1>

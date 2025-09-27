@@ -1,3 +1,5 @@
+/* academic.module.css */
+
 .pageWrapper {
   display: flex;
   flex-direction: column;
@@ -33,7 +35,6 @@
   width: 100%; 
   z-index: 1;
   color: var(--text-light);
-
 }
 
 .dropdownButton {
@@ -178,4 +179,96 @@
 @media (max-width: 600px) {
   .prevButton { transform: translateX(-100%); }
   .nextButton { transform: translateX(0%); }
+}
+
+/* === MEDIA QUERY UNTUK TABLET DAN HP === */
+
+/* Untuk layar tablet (768px atau kurang) */
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 80px 16px 40px; /* Kurangi padding untuk layar lebih kecil */
+  }
+
+  .headline {
+    font-size: 2rem; /* Kurangi ukuran font headline */
+    margin-bottom: 30px;
+  }
+
+  .dropdownContainer {
+    margin-bottom: 40px;
+    flex-direction: column; /* Tata letak kolom */
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dropdownMenu {
+    top: 100%;
+    left: 0;
+    transform: translateX(0);
+    width: 100%;
+  }
+
+  .carouselWrapper {
+    padding: 0 10px;
+  }
+
+  .carousel {
+    gap: 15px; /* Kurangi jarak antar kartu */
+  }
+
+  .card {
+    flex: 0 0 250px; /* Lebar kartu yang lebih kecil */
+  }
+
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+
+  /* Perbaiki posisi tombol navigasi agar tetap responsif */
+  .prevButton {
+    left: 20px; /* Jarak dari kiri */
+    transform: translateX(0);
+  }
+
+  .nextButton {
+    right: 20px; /* Jarak dari kanan */
+    transform: translateX(0);
+  }
+
+  .navButton {
+    top: auto;
+    bottom: 20px; /* Posisikan tombol di bawah carousel */
+  }
+}
+
+/* Untuk layar ponsel (576px atau kurang) */
+@media (max-width: 576px) {
+  .headline {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .dropdownButton {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .dropdownMenu li {
+    padding: 10px 16px;
+  }
+
+  .card {
+    flex: 0 0 220px; /* Lebar kartu yang lebih kecil lagi */
+    height: 350px;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .navButton {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
 }
