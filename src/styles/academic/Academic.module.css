@@ -224,3 +224,85 @@
   scroll-snap-align: start;
   width: 220px; 
 }
+
+/* ==================================== */
+/* RESPONSIVITAS UNTUK TABLET & HP    */
+/* ==================================== */
+
+/* Media Query untuk Tablet (misalnya, lebar maks 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 100px 20px 60px; /* Kurangi padding untuk layar tablet */
+  }
+
+  .headline {
+    font-size: 2.2rem; /* Ukuran font headline lebih kecil */
+    margin-bottom: 30px;
+  }
+
+  .filterBar {
+    flex-direction: column; /* Ubah layout menjadi kolom */
+    gap: 15px; /* Kurangi jarak antar elemen */
+  }
+
+  .dropdownContainer,
+  .searchContainer {
+    max-width: 100%; /* Atur agar mengambil seluruh lebar */
+    width: 100%;
+  }
+
+  .dropdownButton,
+  .searchInput {
+    padding: 10px 18px; /* Kurangi padding input */
+    font-size: 0.9rem; /* Ukuran font lebih kecil */
+  }
+}
+
+/* Media Query untuk Ponsel (misalnya, lebar maks 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 80px 16px 50px; /* Padding lebih kecil lagi */
+  }
+
+  .headline {
+    font-size: 1.8rem; /* Ukuran font untuk ponsel */
+    margin-bottom: 25px;
+  }
+
+  .searchInput {
+    padding-left: 45px; /* Sesuaikan padding untuk icon */
+  }
+
+  /* Sesuaikan ukuran font untuk kartu kursus */
+  .lastCourseTitle {
+    font-size: 1.8rem;
+  }
+
+  .lastCourseEpisode {
+    font-size: 1rem;
+  }
+
+  .courseGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Kolom lebih kecil */
+    gap: 15px;
+  }
+
+  .courseCardTitle {
+    font-size: 1rem;
+  }
+
+  .videosCarousel .courseCard {
+    width: 150px; /* Lebar kartu carousel lebih kecil */
+  }
+
+  .newVideosHeader {
+    flex-direction: column; /* Ubah header menjadi kolom */
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .navButtonsContainer {
+    width: 100%; /* Tombol navigasi mengambil seluruh lebar */
+    justify-content: flex-end; /* Posisikan tombol ke kanan */
+  }
+}
