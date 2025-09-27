@@ -61,3 +61,19 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* Responsif untuk Tablet (misalnya, layar < 768px) */
+@media (max-width: 768px) {
+  /* Di sini Anda bisa menyesuaikan ukuran font, padding, atau layout untuk tablet */
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Responsif untuk Ponsel (misalnya, layar < 480px) */
+@media (max-width: 480px) {
+  /* Di sini Anda bisa menyesuaikan elemen khusus untuk layar ponsel */
+  body {
+    font-size: 12px;
+  }
+}
