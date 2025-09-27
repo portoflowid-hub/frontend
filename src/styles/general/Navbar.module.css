@@ -170,7 +170,7 @@
 
 @media (max-width: 768px) {
   .navbar {
-    background: var(--background);
+  background: transparent;
   }
 
   .container {
