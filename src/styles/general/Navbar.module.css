@@ -74,7 +74,7 @@
   right: 0;
   width: 280px;
   height: 100vh;
-  background-color: var(--background);
+  background: transparent;
   box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
   z-index: 999;
   padding: 20px;
@@ -177,7 +177,7 @@
 /* === MEDIA QUERY UNTUK TABLET DAN HP === */
 @media (max-width: 768px) {
   .navbar {
-    background: var(--background);
+    background: transparent;
   }
 
   .container {
@@ -197,9 +197,7 @@
   }
 
   /* Atur gaya untuk konten di dalam menu mobile */
-  .mobileMenu {
-    /* UBAH: Atur gaya konten menu mobile di sini */
-  }
+  
 
   /* Pastikan elemen-elemen ini ditampilkan di dalam menu mobile */
   .mobileMenu .navLinks,
@@ -218,7 +216,7 @@
   }
 
   /* Gaya untuk tombol Login dan Sign Up di menu mobile */
-  .mobileMenu .navActions .loginBtn,
+  .mobileMenu .navActions .loginBtn, 
   .mobileMenu .navActions .signupBtn {
     font-size: 1.1rem;
     padding: 10px 16px;

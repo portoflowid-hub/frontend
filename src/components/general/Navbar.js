@@ -54,8 +54,8 @@ const Navbar = () => {
 
   const profilePic = user?.profilePic || '/images/profil.jpg';
 
-  // Menempatkan semua konten navigasi dalam satu blok
-  const navigation = (
+  // Konten navigasi untuk desktop dan mobile
+  const navContent = (
     <>
       <div className={styles.navLinks}>
         <Link href="/career" onClick={() => setIsMobileMenuOpen(false)}>Career</Link>
@@ -114,13 +114,13 @@ const Navbar = () => {
             {isMobileMenuOpen ? <IoClose /> : <GiHamburgerMenu />}
           </div>
         ) : (
-          navigation
+          navContent
         )}
       </div>
 
       {isMobile && isMobileMenuOpen && (
         <div className={styles.mobileMenu} ref={mobileMenuRef}>
-          {navigation}
+          {navContent}
         </div>
       )}
     </nav>
