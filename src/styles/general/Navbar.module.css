@@ -1,5 +1,6 @@
 /* Navbar.module.css */
 
+/* === Gaya Dasar Navbar (Berlaku untuk Semua Ukuran Layar) === */
 .navbar {
   width: 100%;
   padding: 20px 0;
@@ -169,7 +170,7 @@
 
 @media (max-width: 768px) {
   .navbar {
-    background: transparent;
+    background: var(--background);
   }
 
   .container {
@@ -187,27 +188,29 @@
   }
 
   .mobileMenu {
-    padding: 20px;
-    padding-top: 100px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-between;
   }
 
-  .mobileMenu .navLinks,
-  .mobileMenu .navActions {
+  .mobileMenu .navLinks {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
     width: 100%;
-    border: none;
+    border-bottom: 1px solid var(--card-stroke);
   }
 
-  .mobileMenu .navLinks {
-    border-bottom: 1px solid var(--card-stroke);
+  .mobileMenu .navActions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    padding: 20px;
+    align-items: stretch;
+    margin-top: auto;
   }
 
   .mobileMenu .navActions .loginBtn, 
@@ -216,11 +219,6 @@
     padding: 10px 16px;
     width: 100%;
     text-align: center;
-  }
-
-  .mobileMenu .navActions {
-    flex-direction: column;
-    width: 100%;
   }
 
   .mobileMenu .profileContainer {
