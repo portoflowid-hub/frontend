@@ -10,18 +10,13 @@
   background: #000;
 }
 
-/* === PERUBAHAN UTAMA UNTUK CENTERING DIMULAI DI SINI === */
+/* === TAMPILAN DESKTOP (DEFAULT) === */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
-  
-  /* Diubah dari flex ke grid */
-  display: grid; 
-  
-  /* Membuat 3 kolom: kiri (1fr), tengah (auto), kanan (1fr) */
+  display: grid;
   grid-template-columns: 1fr auto 1fr;
-  
   align-items: center;
 }
 
@@ -32,9 +27,7 @@
   align-items: center;
   gap: 8px;
   color: #fff;
-  
-  /* Ditambahkan: meratakan item ini ke awal kolomnya */
-  justify-self: start; 
+  justify-self: start;
 }
 
 .navLinks {
@@ -44,12 +37,8 @@
   border-radius: 90px;
   border-bottom: 1px solid var(--card-stroke);
   padding: 8px 16px;
-  
-  /* Ditambahkan: meratakan item ini ke tengah kolomnya */
   justify-self: center;
 }
-/* === AKHIR PERUBAHAN UTAMA === */
-
 
 .navLinks a {
   color: var(--text-secondary);
@@ -64,11 +53,86 @@
   display: flex;
   align-items: center;
   gap: 24px;
-
-  /* Ditambahkan: meratakan item ini ke akhir kolomnya */
   justify-self: end;
 }
 
+/* --- Ikon Hamburger (default disembunyikan) --- */
+.hamburgerIcon {
+  display: none;
+  cursor: pointer;
+  z-index: 100;
+  font-size: 2rem;
+  color: var(--text-light);
+}
+
+/* --- Menu Overlay untuk HP (default disembunyikan) --- */
+.mobileMenu {
+  display: none;
+}
+
+/* === MEDIA QUERY UNTUK TABLET DAN HP === */
+@media (max-width: 768px) {
+  /* Ubah tata letak container untuk layar kecil */
+  .container {
+    grid-template-columns: 1fr 1fr; /* Kolom untuk logo dan hamburger/actions */
+    justify-content: space-between; /* Rata kiri dan kanan */
+  }
+
+  /* Sembunyikan NavLinks dan NavActions di tampilan tablet */
+  .navLinks, .navActions {
+    display: none;
+  }
+
+  /* Tampilkan ikon hamburger */
+  .hamburgerIcon {
+    display: block;
+    justify-self: end;
+  }
+
+  /* Tampilkan menu mobile saat class 'open' ditambahkan oleh JS */
+  .mobileMenu.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background-color: var(--background);
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 90;
+    padding-top: 100px; /* Jarak dari atas */
+  }
+
+  .mobileMenu .navLinks,
+  .mobileMenu .navActions {
+    display: flex; /* Tampilkan elemen di dalam menu mobile */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    border: none;
+    border-bottom: 1px solid var(--card-stroke);
+  }
+
+  .mobileMenu .navActions {
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+  .mobileMenu .loginBtn, .mobileMenu .signupBtn {
+    font-size: 1.1rem;
+    padding: 10px 16px;
+  }
+
+  /* Atur agar Sign Up dan Login tidak sejajar untuk mobile */
+  .mobileMenu .navActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* --- Gaya untuk elemen lainnya (tidak berubah) --- */
 .loginBtn {
   font-weight: 500;
   color: var(--text-light);
@@ -116,7 +180,6 @@
 }
 
 /* KODE UNTUK DROPDOWN (TIDAK BERUBAH) */
-
 .profileContainer {
   position: relative;
 }
