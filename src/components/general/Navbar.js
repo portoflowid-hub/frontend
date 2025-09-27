@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import styles from '../../styles/general/Navbar.module.css';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
-// Impor ikon untuk menu hamburger
+// Impor ikon
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
 import { BsBoxArrowRight, BsGearFill } from 'react-icons/bs';
@@ -16,12 +16,10 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   
-  // Gunakan hook untuk mendeteksi layar mobile
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef(null);
 
-  // Efek untuk menutup dropdown profil jika klik di luar
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -36,10 +34,8 @@ const Navbar = () => {
     };
   }, [isDropdownOpen]);
   
-  // Efek untuk menutup menu mobile jika klik di luar
   useEffect(() => {
     const handleMobileClickOutside = (event) => {
-      // Pastikan klik di luar menu mobile dan bukan pada tombol hamburger
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && !event.target.closest(`.${styles.hamburgerIcon}`)) {
         setIsMobileMenuOpen(false);
       }
@@ -54,7 +50,6 @@ const Navbar = () => {
 
   const profilePic = user?.profilePic || '/images/profil.jpg';
 
-  // Konten navigasi untuk desktop dan mobile
   const navContent = (
     <>
       <div className={styles.navLinks}>
