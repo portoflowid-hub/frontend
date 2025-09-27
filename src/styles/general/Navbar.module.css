@@ -75,7 +75,7 @@
   right: 0;
   height: 100vh;
   z-index: 999; /* Jadikan nilai Z-index sangat tinggi agar menu muncul di atas semua elemen lain */
-  background-color: var(--background);
+  background: #000;
   box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
   z-index: 99;
   padding: 20px;
@@ -175,7 +175,7 @@
 /* === MEDIA QUERY UNTUK TABLET DAN HP === */
 @media (max-width: 768px) {
   .navbar {
-    background: var(--background);
+    background: #000;
   }
 
   .container {
