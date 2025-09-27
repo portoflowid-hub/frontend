@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Navbar from '../components/general/Navbar';
+// Menggunakan Navbar yang sudah diperbarui, yang mengelola tampilan responsif secara internal
+import Navbar from '../components/general/Navbar'; 
 import Footer from '../components/general/Footer';
 import FilterBar from '@/components/academic/FilterBar';
 import LastCourseCard from '@/components/academic/LastCourseCard';
@@ -62,7 +63,8 @@ const AcademicPage = () => {
       <Head>
         <title>Courses Academic - PortoFlow</title>
       </Head>
-      <Navbar />
+      {/* Menggunakan Navbar yang sudah diperbarui, tanpa perlu render kondisional di sini */}
+      <Navbar /> 
 
       <main className={styles.container}>
         <h1 className={styles.headline}>Courses Academic</h1>

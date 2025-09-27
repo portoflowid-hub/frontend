@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
+// Menggunakan Navbar yang sudah diperbarui, yang mengelola tampilan responsif secara internal
 import Navbar from '../components/general/Navbar';
 import Footer from '../components/general/Footer';
 import CareerExplorer from '../components/career/CareerExplorer';

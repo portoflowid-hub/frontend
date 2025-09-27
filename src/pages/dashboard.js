@@ -1,10 +1,16 @@
-// src/pages/dashboard.js (MODIFIKASI PENUH DENGAN LOG)
+// src/pages/dashboard.js
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { jwtDecode } from 'jwt-decode';
 import Head from 'next/head';
+
+// --- Impor yang dimodifikasi untuk menambahkanNavbarMobile dan useMediaQuery ---
 import Navbar from '../components/general/Navbar';
+import NavbarMobile from '../components/general/NavbarMobile';
+import useMediaQuery from '../hooks/useMediaQuery';
+// --- Akhir dari impor yang dimodifikasi ---
+
 import Footer from '../components/general/Footer';
 import ProfileHeader from '../components/dashboard/ProfileHeader';
 import DashboardContent from '../components/dashboard/ProjectGrid';
@@ -14,6 +20,10 @@ const DashboardPage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  // --- Gunakan hook useMediaQuery di sini untuk mendeteksi lebar layar ---
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  // --- Akhir penambahan ---
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,25 +62,15 @@ const DashboardPage = () => {
     fetchData();
   }, []);
 
-  // ======================================================================
-  // PERUBAHAN DI SINI: Fungsi handleDataAdded diisi dengan console.log
-  // ======================================================================
   const handleDataAdded = (newItem, type) => {
-    // LOG 1: Untuk memastikan fungsi ini dipanggil dengan data yang benar
     console.log("Fungsi handleDataAdded dipanggil dengan newItem:", newItem);
-
     setUser(currentUser => {
-      // LOG 2: Untuk melihat state proyek SEBELUM diupdate
       console.log("State proyek SEBELUM diupdate:", currentUser.projects);
-
       const updatedUser = { ...currentUser };
       if (type === 'project') {
         updatedUser.projects = [newItem, ...(currentUser.projects || [])];
       }
-
-      // LOG 3: Untuk melihat state proyek SETELAH diupdate
       console.log("State proyek SETELAH diupdate:", updatedUser.projects);
-
       return updatedUser;
     });
   };
@@ -84,7 +84,9 @@ const DashboardPage = () => {
         <title>Dashboard - {user.fullName}</title>
       </Head>
       <div className={styles.pageWrapper}>
-        <Navbar />
+        {/* --- Bagian yang diubah untuk render kondisional --- */}
+        {isMobile ? <NavbarMobile /> : <Navbar />}
+        {/* --- Akhir modifikasi --- */}
         <main className={styles.container}>
           <ProfileHeader user={user} />
           <DashboardContent 
