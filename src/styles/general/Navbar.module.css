@@ -70,11 +70,11 @@
 /* --- Menu Mobile (default disembunyikan) --- */
 .mobileMenu {
   display: none;
-  position: fixed;
+  position: fixed; /* PENTING: Agar menu tetap di layar dan tidak mengikuti scrolling */
   top: 0;
   right: 0;
-  width: 280px; /* Lebar menu mobile */
   height: 100vh;
+  z-index: 999; /* Jadikan nilai Z-index sangat tinggi agar menu muncul di atas semua elemen lain */
   background-color: var(--background);
   box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
   z-index: 99;
