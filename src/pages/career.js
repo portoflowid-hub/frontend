@@ -1,24 +1,49 @@
 import { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
+// Menggunakan Navbar yang sudah diperbarui, yang mengelola tampilan responsif secara internal
 import Navbar from '../components/general/Navbar';
+import NavbarMobile from '../components/general/NavbarMobile';
+import useMediaQuery from '../hooks/useMediaQuery';
 import Footer from '../components/general/Footer';
-
-// Komponen-komponen ini dinonaktifkan sementara untuk pengujian
-// import CareerExplorer from '../components/career/CareerExplorer';
-// import CareerDetailView from '../components/career/CareerDetailView';
-// import styles from '../styles/career/Career.module.css';
+import CareerExplorer from '../components/career/CareerExplorer';
+import CareerDetailView from '../components/career/CareerDetailView';
+import styles from '../styles/career/Career.module.css';
 
 const CareerPage = () => {
+  const [selectedCareer, setSelectedCareer] = useState(null);
+  const detailRef = useRef(null);
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
+  const handleCareerSelect = (careerData) => {
+    // Jika user mengklik kartu yang sama, tutup detailnya. Jika beda, ganti detailnya.
+    setSelectedCareer(prev => (prev && prev.slug === careerData.slug ? null : careerData));
+  };
+
+  useEffect(() => {
+    if (selectedCareer && detailRef.current) {
+      // delay dikit agar DOM sempat update sebelum scroll
+      setTimeout(() => {
+        detailRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [selectedCareer]);
+
   return (
     <>
       <Head>
         <title>Career Path - PortoFlow</title>
       </Head>
-      <div style={{ padding: '20px' }}>
-        <Navbar />
-        <main style={{ paddingTop: '100px', paddingBottom: '20px' }}>
-          <h1>Halaman Karir (Tes)</h1>
-          <p>Jika menu hamburger berfungsi di sini, masalahnya ada di komponen yang lain.</p>
+      <div className={styles.pageWrapper}>
+        {isMobile ? <NavbarMobile /> : <Navbar />}
+        <main className={styles.mainContent}>
+          {/* Komponen explorer dengan semua fungsionalitasnya */}
+          <CareerExplorer onCardClick={handleCareerSelect} />
+
+          {/* area untuk menampika detail */}
+          <div ref={detailRef}>
+            {selectedCareer && <CareerDetailView careerData={selectedCareer} />}
+          </div>
         </main>
         <Footer />
       </div>
